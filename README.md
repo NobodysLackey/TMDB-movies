@@ -49,7 +49,7 @@ const index = (req, res) => {
 }
 ```
 
-Right now, our controller just renders our **movies/index.ejs** view. Let's get to it!
+Right now, our controller just renders our **views/movies/index.ejs** view. Let's get to it!
 
 First, at the top of the controller file, we'll need to require axios. This allows us to use the axios object to make our requests.
 ```js
@@ -82,10 +82,10 @@ const index = async (req, res) => {
 ```
 
 The GET method in axios takes in the URL path as an argument. The URL path we'll use in *this case* will utilize the variables at the top of the controller.
-- DOMAIN - represents the base URL for the call
-- API_KEY - already retrieving our secret key from our .env file and preparing it for use
+- **DOMAIN** - represents the base URL for the call
+- **API_KEY** - already retrieving our secret key from our `.env` file and preparing it for use
 
-Using these variables and a string interpolation, we'll craft our URL path for axios.get. To get the top 20 most popular movies, well add `/movie/popular` along with a few options into our path. Then, we'll add our API key to the end.
+Using these variables and string interpolation, we'll craft our URL path for `axios.get`. To get the top 20 most popular movies, we'll add `/movie/popular` along with a few other options into our path. Then, we'll add our API key to the end.
 
 We'll also `console.log` our response variable so we can see what we get back.
 ```js
@@ -95,13 +95,13 @@ const index = async (req, res) => {
   res.render('movies')
 }
 ```
-To test this, navigate to `http://localhost:3000/movies` with your server running. In the `console.log`, look for a `data.results` key. This is an array of the 20 most popular movies! Yes!
+To test this, navigate to `http://localhost:3000/movies` with your server running. In the `console.log`, look for a `data.results` key. This is an array of the 20 most popular movies! Nice!
 
 Now, all we need to do is store this array in a variable and pass it to our view.
 ```js
 const index = async (req, res) => {
   const response = await axios.get(`${DOMAIN}/movie/popular?include_adult=false&language=en-US&api_key=${API_KEY}`)
-  const movies = response.data.results
+  let movies = response.data.results
   res.render('movies', { movies })
 }
 ```
@@ -118,7 +118,7 @@ In **views/movies/index.ejs**...
 <%- include('../partials/footer') %>
 ```
 
-Now that we have access to our movies array sent over from our controller, we'll need to render them to the page. Add the following to your view.
+Now that we have access to our movies array sent over from our controller, we'll need to render them to the page. We'll iterate over the array, and show information for every movie as we go. Add the following to your view:
 ```html
 <%- include('../partials/header') %>
 
@@ -165,11 +165,11 @@ Once added into our view, our final EJS should look like this and should render 
 For this second part, we need to build out the functionality for a user to search for any movie title and return the top 20 results.
 
 This will require:
-1. A small form at the top of **views/movies/index.ejs** with an input field the user can type into
+1. A small form at the top of **views/movies/index.ejs** with an input field the user can type into and a button to submit
 2. A `search` controller in **controllers/movies.js** that will make an axios call
-   - As our user fires off the form action, we'll need to use `req.query` to access what they type into the form field. Be sure and give your input field in your EJS a `name` attribute like "movie". You will access this value with something like `req.query.movie` in your controller.
-   - The URL path for a search in TMDB is different than the one we used before. Read about it [here](https://developer.themoviedb.org/reference/search-movie). We'll need to place our `req.query.movie` right after the `?query=` portion. This will enable the search to find the movie our user wants! Don't forget to add your API key to the end as well.
-3. Otherwise, our controller will be set up much the same as our last one. Make sure and send your movies array to the view when you render!
+   - As our user fires off the form action, we'll need to use [req.query](https://expressjs.com/en/api.html#req.query) to access what they type into the form field. Be sure and give your input field in your EJS a `name` attribute like "movie". You will access this value with something like `req.query.movie` in your controller.
+   - The URL path for a search in TMDB is different than the one we used in Part 1. Read about it [here](https://developer.themoviedb.org/reference/search-movie). We'll need to place our `req.query.movie` right after the `?query=` portion. This will enable the search to find the movie our user wants! Don't forget to add your API key to the end as well.
+3. Otherwise, our controller will be set up much the same as the one in Part 1. Make sure and send your movies array to the view when you render!
 
 Once those steps are completed, you should be able to search for any movie in your form and see the results displayed to the page utilizing the forEach we set up earlier!
 
@@ -177,13 +177,13 @@ Once those steps are completed, you should be able to search for any movie in yo
 
 If you need an extra challenge and practice, let's add a `Details` page for each movie.
 
-You'll definitely need to head over to the [docs](https://developer.themoviedb.org/reference/movie-details) to research how to query for a single movie's details utilizing the `movie_id` that we've already got access to from our search results!
+You'll definitely need to head over to the [docs](https://developer.themoviedb.org/reference/movie-details) to research how to query for a single movie's details utilizing the `movie_id` that we've already got access to from the objects in our array from our API call!
 
 Requirements, not necessarily in this order:
 - Set up a "View Details" button for each movie inside the forEach in **views/movies/index.ejs**.
-- Set up a controller that will make an API call utilizing the movies ID.
-- When a user clicks on the button, pass the movie's `id`.
-- Set up a new EJS view for the movie details. Have this page show more information about the movie, or even an alternate image! `Console.log` the response from the axios call so you can see what all is available!
+- Set up a controller that will make an API call utilizing the `movie_id`.
+- When a user clicks on the button, pass the movie's `movie_id`.
+- Set up a new EJS view for the movie details. Have this page show more information about the movie, or even an alternate image! `Console.log` the response from the axios call so you can see what all is available! Be creative!
 
 ## Resources
 
