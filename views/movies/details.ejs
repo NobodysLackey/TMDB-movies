@@ -19,12 +19,12 @@
   </div>
   <div class="info-item">
     <h2>Release Date:</h2>
-    <h2 class="date"><%= date %></h2>
+    <h2 class="date"><%= movie.release_date %></h2>
   </div>
-  <% if (budget !== "$0") { %>
+  <% if (movie.budget !== "$0") { %>
     <div class="info-item">
       <h2>Budget:</h2>
-      <h1><%= budget %></h1>
+      <h1><%= movie.budget %></h1>
     </div>
   <% } %>
   <% if (movie.runtime) { %>

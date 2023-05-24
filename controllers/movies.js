@@ -32,10 +32,11 @@ const getDetails = async (req, res) => {
   dateArray.forEach((char, idx) => {
     newDate[idx] = dateArray[sequence[idx]]
   })
+  movie.release_date = newDate.join('')
 
-  let budget = "$" + movie.budget.toLocaleString()
+  movie.budget = "$" + movie.budget.toLocaleString()
 
-  res.render('movies/details', { movie, date: newDate.join(''), budget })
+  res.render('movies/details', { movie })
 }
 
 module.exports = {
