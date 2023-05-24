@@ -2,68 +2,76 @@
 
 <h1><%= movie.title %></h1>
 <% if (movie.tagline !== "") { %>
-  <h2><%= movie.tagline %></h2>
+  <h2 class="var-text"><%= movie.tagline %></h2>
 <% } %>
 <br>
+<% if (movie.homepage) { %>
 <a href="<%= movie.homepage %>">
+<% } else { %>
+<a href="https://www.imdb.com/title/<%= movie.imdb_id %>">
+<% } %>
   <img src="https://image.tmdb.org/t/p/original/<%= movie.backdrop_path %>" alt="<%= movie.title %>" class="backdrop" />
 </a>
-<h2>Overview:</h2>
+<h2 class="var-text">Overview:</h2>
 <section class="overview">
   <h3 class="overview"><%= movie.overview %></h3><br>
 </section>
 <section class="info">
   <div class="info-item">
-    <h2>Status:</h2>
+    <h2 class="var-text">Status:</h2>
     <h1><%= movie.status %></h1>
   </div>
   <div class="info-item">
-    <h2>Release Date:</h2>
-    <h2 class="date"><%= movie.release_date %></h2>
+    <h2 class="var-text">Release Date:</h2>
+    <h1 class="date"><%= movie.release_date %></h1>
   </div>
   <% if (movie.budget !== "$0") { %>
     <div class="info-item">
-      <h2>Budget:</h2>
+      <h2 class="var-text">Budget:</h2>
       <h1><%= movie.budget %></h1>
     </div>
   <% } %>
   <% if (movie.runtime) { %>
     <div class="info-item">
-      <h2>Runtime:</h2>
+      <h2 class="var-text">Runtime:</h2>
       <h1><%= movie.runtime %> minutes</h1>
     </div>
   <% } %>
 </section>
 <section>
-  <h2>Produced By:</h2>
+  <h2 class="var-text">Produced By:</h2>
   <div class="list">
     <% movie.production_companies.forEach((company) => { %>
       <div class="item">
         <% if (company.logo_path) { %>
           <img src="https://image.tmdb.org/t/p/original/<%= company.logo_path %>" alt=<%= company.name %> class="logo" />
         <% } else { %>
-          <h2><%= company.name %></h2>
+          <h2 class="var-text"><%= company.name %></h2>
         <% } %>
       </div>
     <% }) %>
   </div>
 </section>
 <section>
-  <h2>Genres:</h2>
+  <h2 class="var-text">Genres:</h2>
   <div class="list">
     <% movie.genres.forEach((genre) => { %>
-      <h3 class="item"><%= genre.name %></h3>
+      <h3 class="item var-text"><%= genre.name %></h3>
     <% }) %>
   </div>
 </section>
-<h2>Links:</h2>
+<h2 class="var-text">Links:</h2>
 <section class="info links">
+  <% if (movie.homepage) { %>
   <div>
     <a href="<%= movie.homepage %>" class="btn">Homepage</a>
   </div>
+  <% } %>
+  <% if (movie.imdb_id) { %>
   <div>
     <a href="https://www.imdb.com/title/<%= movie.imdb_id %>" class="btn">IMDB</a>
   </div>
+  <% } %>
 </section>
 
 <%- include('../partials/footer') %>

@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  width: 98vw;
+  width: 100%;
   background-color: dimgrey;
   text-align: center;
   font-family: 'Noto Sans KR', sans-serif;
@@ -16,6 +16,7 @@ main {
 
 h1 {
   color: tomato;
+  font-size: 2vw;
 }
 
 #title {
@@ -26,6 +27,8 @@ nav {
   font-size: 20px;
   font-weight: bold;
   height: 5vh;
+  width: 100%;
+  background-color: rgb(60, 60, 60);
 
   display: flex;
   justify-content: space-around;
@@ -126,7 +129,6 @@ button {
   width: 10vw;
 }
 
-
 .overview {
   width: 70vw;
   color: white;
@@ -160,4 +162,8 @@ button {
 
 .links {
   margin-bottom: 5vh;
+}
+
+.var-text {
+  font-size: 1.75vw;
 }
