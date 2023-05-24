@@ -4,14 +4,23 @@
 <br>
 <form action="/movies/search" method="GET">
   <input type="text" placeholder="movie" name="movie" />
-  <button type="submit">Search</button>
+  <button type="submit" class="btn">Search</button>
 </form>
 <br><br>
 <div class="results">
   <% movies.forEach((movie) => { %>
     <div class="movie">
-      <img src="https://image.tmdb.org/t/p/original/<%= movie.poster_path %>" alt="<%= movie.title %>" />
+      <form action="/movies/details/<%= movie.id %>" method="GET">
+        <% if (movie.poster_path) { %>
+          <button type="submit"><img src="https://image.tmdb.org/t/p/original/<%= movie.poster_path %>" alt="<%= movie.title %>" class="poster" /></button>
+        <% } else { %>
+          <img src="https://otv.one/uploads/default_image/thumbnail.jpg" alt="No Poster Available" class="poster" />
+        <% } %>
+      </form>
       <h2><%= movie.title %></h2>
+      <form action="/movies/details/<%= movie.id %>" method="GET">
+        <button type="submit" class="btn">View Details</button>
+      </form>
     </div>
     <br>
   <% }) %>
